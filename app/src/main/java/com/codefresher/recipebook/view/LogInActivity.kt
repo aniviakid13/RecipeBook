@@ -3,6 +3,7 @@ package com.codefresher.recipebook.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.codefresher.recipebook.MainActivity
@@ -19,7 +20,7 @@ class LogInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        binding = ActivityLogInBinding.inflate(layoutInflater)
+        binding = com.codefresher.recipebook.databinding.ActivityLogInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -47,26 +48,31 @@ class LogInActivity : AppCompatActivity() {
             btnLogIn.visibility = View.VISIBLE
 
         }
+        btnLogIn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
     }
-
     private fun signUp() {
-        val emailSignUp = binding.edtEmailSignUp.text.toString()
-        val passSignUp = binding.edtPassSignUp.text.toString()
-        val rePass = binding.edtRePass.text.toString()
+
         binding.btnSignUp.setOnClickListener {
+            val emailSignUp = binding.edtEmailSignUp.text.toString()
+            val passSignUp = binding.edtPassSignUp.text.toString()
+            val rePass = binding.edtRePass.text.toString()
+
+
+
             if (emailSignUp.isNotEmpty() && passSignUp.isNotEmpty() && rePass.isNotEmpty()) {
                 if (passSignUp == rePass) {
-
                     firebaseAuth.createUserWithEmailAndPassword(emailSignUp, passSignUp)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
+
+                                Toast.makeText(this, "Sign Up successfully", Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT)
                                     .show()
-
                             }
                         }
                 } else {
@@ -79,29 +85,23 @@ class LogInActivity : AppCompatActivity() {
     }
 
     private fun logIn() {
-        val email = binding.edtEmail.text.toString()
-        val pass = binding.edtPassword.text.toString()
         binding.btnLogIn.setOnClickListener {
             val email = binding.edtEmail.text.toString()
             val pass = binding.edtPassword.text.toString()
 
             if (email.isNotEmpty() && pass.isNotEmpty()) {
-
                 firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if (it.isSuccessful) {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
-
                     }
                 }
             } else {
                 Toast.makeText(this, "Empty Fields Are not Allowed !!", Toast.LENGTH_SHORT).show()
-
             }
         }
     }
-
 
 }
