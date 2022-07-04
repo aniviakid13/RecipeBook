@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:id="@+id/itemHome"
+            android:icon="@drawable/home"
+            android:title="@string/home"/>
+
+    <item
+        android:id="@+id/itemFavorite"
+        android:icon="@drawable/love"
+        android:title="@string/favorite" />
+
+    <item android:id="@+id/itemCreate"
+            android:icon="@drawable/create"
+            android:title="@string/my_recipes"/>
+
+
+
+    <item
+        android:id="@+id/itemTag"
+        android:icon="@drawable/tag"
+        android:title="@string/tag" />
+
+
+    <item
+        android:id="@+id/itemProfile"
+        android:icon="@drawable/profile"
+        android:title="@string/profile" />
+
+
+</menu>
